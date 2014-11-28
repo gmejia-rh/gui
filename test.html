@@ -1,0 +1,57 @@
+
+
+<p>Please choose a Beer :</p>
+<select size="10" name="decision2" style="width: 400px;">
+    <option selected id="test"></option>
+    <option>Heiniken      Export     lager          55sek
+    <option>   lager          50sek
+    <option>Heiniken           lager          50sek
+    <option>Heiniken           lager          50sek
+    <option>Heiniken           lager          50sek
+    <option>Beer 7
+    <option>Beer 8
+    <option>Beer 9
+    <option>Beer 10
+    <option>Beer 11
+    <option>
+</select>
+<?php
+echo "My first PHP script!";
+?>
+
+
+
+<script>
+function Get(yourUrl){
+var Httpreq = new XMLHttpRequest(); // a new request
+Httpreq.open("GET",yourUrl,false);
+Httpreq.send(null);
+return Httpreq.responseText;
+
+}
+
+
+var data = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id=157503"));
+
+/*var daa={"payload" : [{"nr" : "157503","artikelid" : "26775","varnummer" : "1575","namn" : "Anchor Steam Beer","namn2" : "","prisinklmoms" : "23.90","volymiml" : "","prisperliter" : "","saljstart" : "2000-12-04","slutlev" : " ","varugrupp" : "Öl, Specialöl","forpackning" : "Flaska","forslutning" : "","ursprung" : "","ursprunglandnamn" : "USA","producent" : "Anchor Brewing Company","leverantor" : "Cask Sweden AB","argang" : "","provadargang" : "","alkoholhalt" : "4.8%","modul" : "","sortiment" : "FS","ekologisk" : "0","koscher" : "0"}]}*/
+
+document.getElementById("placeholder").innerHTML=data.payload[0].namn + " " + data.payload[0].namn2+"--"+ data.payload[0].leverantor;
+</script>
+
+
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("test").innerHTML=data_beer.payload[2].namn + " "
+    + data_beer.payload[2].namn2+" -- "+ data_beer.payload[2].pub_price + "sek";
+</script>

@@ -1,0 +1,136 @@
+<h1>Need to buy :</h1>
+<p>Name - Remaining - ID</p>
+<select size="10" name="To buy" style="width: 400px;">
+    <option selected id="stock"></option>
+    <option id="stock2"></option>
+    <option>Heineken Export
+    <option>Heineken
+    <option>Heineken
+    <option>Heineken
+    <option>Heineken
+    <option>Beer 7
+    <option>Beer 8
+    <option>Beer 9
+    <option>Beer 10
+    <option>Beer 11
+    <option>
+</select>
+
+
+<h1>Most sold beers :</h1>
+        <p>Name - Number sold</p>
+<select size="10" name="Most sold" style="width: 400px;">
+    <option selected id="mostsold"></option>
+    <option id="mostsold2"></option>
+    <option>Heineken Export
+    <option>Heineken
+    <option>Heineken
+    <option>Heineken
+    <option>Heineken
+    <option>Beer 7
+    <option>Beer 8
+    <option>Beer 9
+    <option>Beer 10
+    <option>Beer 11
+    <option>
+</select>
+
+
+
+
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id=157503"));
+
+    /*var daa={"payload" : [{"nr" : "157503","artikelid" : "26775","varnummer" : "1575","namn" : "Anchor Steam Beer","namn2" : "","prisinklmoms" : "23.90","volymiml" : "","prisperliter" : "","saljstart" : "2000-12-04","slutlev" : " ","varugrupp" : "Öl, Specialöl","forpackning" : "Flaska","forslutning" : "","ursprung" : "","ursprunglandnamn" : "USA","producent" : "Anchor Brewing Company","leverantor" : "Cask Sweden AB","argang" : "","provadargang" : "","alkoholhalt" : "4.8%","modul" : "","sortiment" : "FS","ekologisk" : "0","koscher" : "0"}]}*/
+
+    document.getElementById("placeholder").innerHTML=data.payload[0].namn + " " + data.payload[0].namn2+"--"+ data.payload[0].leverantor;
+</script>
+
+
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("stock").innerHTML=data_beer.payload[2].namn + "     " + data_beer.payload[2].namn2 + "     " + data_beer.payload[2].count + "    " + data_beer.payload[2].beer_id;
+</script>
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("stock2").innerHTML=data_beer.payload[3].namn + "     " + data_beer.payload[3].namn2 + "    " + data_beer.payload[3].count + "    " + data_beer.payload[3].beer_id;
+</script>
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("mostsold").innerHTML=data_beer.payload[10].namn + "     " + data_beer.payload[10].namn2 + "    " + "123";
+</script>
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("mostsold2").innerHTML=data_beer.payload[15].namn + "     " + data_beer.payload[15].namn2 + "   " + "89";
+</script>
+
+<script>
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+
+    }
+
+
+    var beerlist = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+
+    document.getElementById("beerlist").innerHTML=data_beer.payload[].namn;
+    <p>beerlist</p>
+
+</script>
