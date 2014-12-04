@@ -8,7 +8,7 @@
 <link href="css.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body onload="onloading()">
 
 <div class="container">
   <div class="header">Customer </div>
@@ -26,10 +26,14 @@
       <li></li>
       <li></li>
       <li></li>
-      <li><a href="#">Add Credit</a></li>
-      <li><a href="#">Add Beer to tab</a></li>
-      <li><a href="#">See Tab</a></li>
+      <li><a href="#">Add Credit</a><p><input type = "text" id="creditsbox" placeholder="Enter amount"></input><p>
+        <button type="button" onClick="onClick()">Click to add credits</button>
+        <p>Credits: <a id="credits">0</a></p></li>
+      <li><a href="#" onclick="addBeerTab()" >Add Beer to tab</a></li>
+     <!-- <li><a href="#"  onclick= "window.open('TabPopUp.html', 'pop', 'height=x, width=y, top=z, left=t, resible=no');">See Tab</a></li>-->
+      <li><a href="#" onclick="tab_box()" >See Tab</a></li>
       <li><a href="#">Check out</a></li>
+      <li><a href="login.html" onclick="logout()">Log Out</a></li>
     </ul>
     <p>&nbsp;</p>
   </div>
@@ -37,12 +41,12 @@
 
     <h1>Beers</h1>
     <p>Please choose a Beer :</p>
-    <div onclick="beer_box()">Click to show beers</div>
+
     <div id="test"></div>
 
   </br>
 
-
+    <div id="tab"></div>
 
     </br>
 
