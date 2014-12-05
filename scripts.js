@@ -1,3 +1,8 @@
+//Global Variables
+//The Logged In User is tracked in usr
+//var usr = "";
+
+
 // SCRIPTS FOR LOGIN
 	
 	function pswds() {
@@ -22,7 +27,7 @@ function loginusr() {
 	if (correct_login == true) {
 		//alert("du loggas in som " + usr);
 		sessionStorage.myvar = usr;
-		window.open("Bartender.html");
+		window.open("Bartender.html" , "_self");
 	} else {
 		for (var i = 0; i < users.length; i++) {
 			if (pswd === users[i]) {
@@ -34,18 +39,66 @@ function loginusr() {
 		if (correct_login == true) {
 			//alert("du loggas in som " + usr);
 			sessionStorage.myvar = usr;
-			window.open("Customer.html");
+			window.open("Customer.html" , "_self");
 		}
 
 	}
 }
-	
+
+
+	//Alerts for credit and cash payment
+	function paycash(){
+		alert("Cash register opened");
+	}
+	function paycard(){
+		alert("Please Insert card");
+	}
+	function paycredit(){
+		 //document.getElementById("userscredit").style.display = 'none';
+		var payinguser = document.getElementById("userscredit").value;
+		alert("denna payar " +payinguser);
+	}
+	/*function usercredit(){
+		var array = ['user1', 'user2'];
+		var output='<select size="20" name="decision2" style="width: 600px;" onchange="changeFunc(value);">';
+		array.sort();
+		for(i=0; i<array.length; i++){
+		output += '<option value='+ array[i][3]+'>';
+		for(k=0; k<array[i].length-1; k++){
+			output += " " + array[i][k];
+
+		}
+		output += '</option>'+'</br>';
+	}
+	alert("listan" + output)
+	output += '</select>'
+	document.getElementById("paycredit").innerHTML = output;
+	}*/
+	function createusr(){
+		
+		var newusr = document.getElementById("newusr").value;
+		var newpswd = document.getElementById("newpswd").value;
+		var firstname = document.getElementById("firstname").value;
+		var lastname = document.getElementById("lastname").value;
+		var mail = document.getElementById("mail").value;
+		var phone = document.getElementById("phone").value;
+		//alert(""+usr);
+		var url='http://pub.jamaica-inn.net/fpdb/api.php?username='+usr+'&'+usr+'=ervtod&action=user_edit&new_username='+newusr+'&new_password='+newpswd+'&first_name='+firstname+'&last_name='+lastname+'&email='+mail+'&phone='+phone;
+		//alert("hej" + url);
+		JSON.parse(Get(url));
+		alert("New User Created");
+		window.open("Bartender.html" , "_self");
+	}
+		
 	
 	
 	//ONLOAD FOR BOTH BARTENDER AND CUSTOMER TO GET THE USERNAME LATER USED 
 	function onloading(){
-		var usr = sessionStorage.myvar;
+		usr = sessionStorage.myvar;
+		//alert(""+usr);
+		document.getElementById("header").innerHTML = ("Logged in as: " + usr);
 		beer_box();
+		//document.getElementById("paycredit").style.display = '';
 		var creditslist = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username="+usr+"&password="+usr+"&action=iou_get"));
 //alert ("creditslist<"+creditslist.payload[0].assets+">");
 		var credits_temp = creditslist.payload[0].assets;

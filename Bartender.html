@@ -10,19 +10,28 @@
 
 <body  onload="onloading()">
 
-<div class="container">
-  <div class="header">Bartender </div>
+<div class="container" >
+  <div class="header" id="header">Bartender </div>
   <div class="sidebar1">
     <ul class="nav">
       <li></li>
       <li></li>
       <li></li>
       <li></li>
-      <li><a href="#">Pay With Card</a></li>
-      <li><a href="#">Pay With Cash</a></li>
-      <li><a href="#">Pay With Credit</a></li>
+      <li><a href="#" onclick="paycard()">Pay With Card</a></li>
+      <li><a href="#" onclick="paycash()">Pay With Cash</a></li>
+      <li><a href="#">Pay With Credit
+	  <br><div id="paycredit"><select id="userscredit"> 
+	  <option value="aamsta">aamsta</option> 
+	  <option value="anddar">ankov</option>
+	  </select>
+	   <input type="Submit" id="paywithcredit" value="Pay With Credit"  onclick="paycredit()"/>
+	  </div> </br>
+	  
+	  
+      </a></li>
       <li><a href="#">Manage Tabs</a></li>
-      <li><a href="#">Approve VIPs</a></li>
+      <li><a href="NewUser.html">Create New User</a></li>
       <li><a href="Statistics.html">Statistics and Beer-stock management</a></li>
       <li><a href="login.html" onclick="logout()">Log Out</a></li>
     </ul>

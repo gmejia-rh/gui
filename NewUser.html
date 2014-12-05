@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+  <script src="scripts.js"></script>
+
+<link href="css.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="onloading()">
+
+<div class="container">
+  <div class="header" id="header">Customer </div>
+  <div class="sidebar1">
+    
+    <ul class="nav">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      
+      <li><a href="bartender.html">Back</a></li>
+      <li><a href="login.html" onclick="logout()">Log Out</a></li>
+    </ul>
+    <p>&nbsp;</p>
+  </div>
+  <div class="content">
+	
+    <h1>Create New User</h1>
+  
+    
+    <p>&nbsp;</p>
+    <p align="center"> <input type="text" id="newusr" placeholder="New Username"/></p>
+	<p align="center">
+      <input type="text" id="newpswd" placeholder="New Password" />
+    </p>
+	<p align="center">
+      <input type="text" id="firstname" placeholder="First Name"/>
+    </p>
+	<p align="center">
+      <input type="text" id="lastname" placeholder="Last Name"/>
+    </p>
+	<p align="center">
+      <input type="text" id="mail" placeholder="Email" />
+    </p>
+	<p align="center">
+      <input type="text" id="phone" placeholder="Phonenumber"/>
+    </p>
+	 <p class="submit" align="center"><input type="submit" name="commit" value="Create New User" onclick="createusr()" > 
+    </p>
+  <!-- end .content --></div>
+  <div class="footer">
+    <p>Copyright The Beer Pub Group 1 GUI</p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+</html>
