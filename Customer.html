@@ -16,7 +16,8 @@
     <ul class="nav">
       <li id="the_selected_beer"></li>
     </ul>
-    <p><img src="bottle.jpg" width="185" height="272" alt="beer" /></p>
+    <p id="selected_beverage"></p>
+    <!--<p><img src="bottle.jpg" width="185" height="272" alt="beer" /></p>-->
     <p id = "beer_info"></p>
     <p>&nbsp;</p>
     <ul class="nav">
@@ -26,7 +27,7 @@
       <li></li>
       <li></li>
       <li></li>
-      <li><a href="#">Add Credit</a><p><input type = "text" id="creditsbox" placeholder="Enter amount"></input><p>
+      <li><a href="#">Add Credit</a><p><input type = "text" id="creditsbox" placeholder="Enter amount"><input><p>
         <button type="button" onClick="onClick()">Click to add credits</button>
         <p>Credits: <a id="credits">0</a></p></li>
       <li><a href="#" onclick="addBeerTab()" >Add Beer to tab</a></li>
@@ -39,11 +40,14 @@
   </div>
   <div class="content">
 
-    <h1>Beers</h1>
-    <p>Please choose a Beer :</p>
+    <h1>Beverages</h1>
+    <p class="beer_button"><input type="submit" name="commit" value="Beer" onclick="beer_table()"></p>
+    <p class="wine_button"><input type="submit" name="commit" value="Wine" onclick="wine_table()"></p>
+    <p class="other_button"><input type="submit" name="commit" value="Cider" onclick="other_table()"></p>
+    <p>Please choose a Beverage :</p>
 
-    <div id="test"></div>
 
+    <div id="beerTable"></div>
   </br>
 
     <div id="tab"></div>

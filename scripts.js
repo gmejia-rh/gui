@@ -97,7 +97,7 @@ function loginusr() {
 		usr = sessionStorage.myvar;
 		//alert(""+usr);
 		document.getElementById("header").innerHTML = ("Logged in as: " + usr);
-		beer_box();
+		beer_table();
 		//document.getElementById("paycredit").style.display = '';
 		var creditslist = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username="+usr+"&password="+usr+"&action=iou_get"));
 //alert ("creditslist<"+creditslist.payload[0].assets+">");
@@ -116,18 +116,6 @@ function Get(yourUrl){
 
 }
 
-/*function beer_list_box() {
-	var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
-	var i;
-	var out='<select size="20" name="decision2" style="width: 600px;">';
-	for(i=2; i<60; i++){
-	out +='<option>' + data_beer.payload[i].namn + " "
-	+ data_beer.payload[i].namn2 + " -- " + data_beer.payload[i].pub_price + "sek" + '</option>' +'<br>';
-		}
-	out+='</select>'
-	document.getElementById("test").innerHTML = out;
-
-}*/
 
 //creates a main_array with array in it. The array has the values [namn, namn2, pub_price + "sek", beer_id]
 function beer_list(){
@@ -137,49 +125,181 @@ function beer_list(){
 	var array = [];
 
 
-	for(i=2; i<data_beer.payload.length; i++){
-		array[array.length] = data_beer.payload[i].namn;
-		array[array.length] = data_beer.payload[i].namn2;
-		array[array.length] = data_beer.payload[i].pub_price +" sek";
-		array[array.length] = data_beer.payload[i].beer_id;
+	for(i=0; i<data_beer.payload.length; i++) {
+		if (data_beer.payload[i].namn != "") {
+			array[array.length] = data_beer.payload[i].namn;
+			array[array.length] = data_beer.payload[i].namn2;
+			array[array.length] = data_beer.payload[i].pub_price + " sek";
+			array[array.length] = data_beer.payload[i].beer_id;
 
-		main_array[main_array.length] = array;
+			main_array[main_array.length] = array;
 
+			array = [];
 
-		array = [];
-
+		}
 	}
 	//beer_box(main_array)
 	return main_array;
 
 }
+//is beverage a beer, wine or cider
+function if_beer_or_wine(beer_id_temp){
+	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+beer_id_temp+'"';
+	var beer_info = JSON.parse(Get(url));
+	var beverage;
+	var cider="cider";
 
-//Creates a listbox with all the beers, order by name.
-function beer_box(){
+	beverage = beer_info.payload[0].varugrupp;
+
+	if(beverage.toLowerCase().match("öl")){
+		return true;
+	}
+	else if(beverage.toLowerCase().match("vin")){
+		return false;
+	}
+	else return cider;
+}
+//Creates a table with the all the beers
+function beer_table(){
 	var array = beer_list();
-	var output='<select size="20" name="decision2" style="width: 600px;" onchange="changeFunc(value);">';
 	array.sort();
+	var outPut='<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
-		output += '<option value='+ array[i][3]+'>';
-		for(k=0; k<array[i].length-1; k++){
-			output += " " + array[i][k];
+		if(if_beer_or_wine(array[i][3])==true) {
 
+
+			outPut += '<tr  draggable="true"; onmouseover="ChangeColor(this, true);"onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			//output += '<option value='+ array[i][3]+'>';
+			for (k = 0; k < array[i].length - 1; k++) {
+				outPut += '<td>' + array[i][k] + '</td>';
+
+			}
+
+			outPut += '</tr>';
 		}
-		output += '</option>'+'</br>';
+	}
+
+	//alert("listan" + output)
+	outPut += '</tbody></table>';
+	document.getElementById("beerTable").innerHTML = outPut;
+	document.getElementById("selected_beverage").innerHTML= '<img src="bottle.jpg" width="185" height="272" alt="beer" />';
+
+}
+////Creates a table with the all the wines
+function wine_table(){
+	var array = beer_list();
+	array.sort();
+	var outPut='<table border="thick"><thead><tr><th>Wine</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	for(i=0; i<array.length; i++){
+		if(if_beer_or_wine(array[i][3])==false) {
+
+			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			//output += '<option value='+ array[i][3]+'>';
+			for (k = 0; k < array[i].length - 1; k++) {
+				outPut += '<td>' + array[i][k] + '</td>';
+
+			}
+
+			outPut += '</tr>';
+		}
 	}
 	//alert("listan" + output)
-	output += '</select>'
-	document.getElementById("test").innerHTML = output;
+	outPut += '</tbody></table>';
+	document.getElementById("beerTable").innerHTML = outPut;
+	document.getElementById("selected_beverage").innerHTML= '<img src="wine.jpg" width="185" height="272" alt="beer" />';
+
 }
 
-// displays the choosen beer with more information
+////Creates a table with the cider and all the non-alcoholic beverage
+function other_table(){
+	var array = beer_list();
+	array.sort();
+	var outPut='<table border="thick"><thead><tr><th>Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	for(i=0; i<array.length; i++){
+		if(if_beer_or_wine(array[i][3])=="cider") {
+
+			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			//output += '<option value='+ array[i][3]+'>';
+			for (k = 0; k < array[i].length - 1; k++) {
+				outPut += '<td>' + array[i][k] + '</td>';
+
+			}
+
+			outPut += '</tr>';
+		}
+	}
+	//alert("listan" + output)
+	outPut += '</tbody></table>';
+	document.getElementById("beerTable").innerHTML = outPut;
+	document.getElementById("selected_beverage").innerHTML= '<img src="cider.jpg" width="185" height="272" alt="beer" />';
+
+}
+
+//change the color when hovering over the beer_table
+function ChangeColor(tableRow, highLight){
+	if (highLight)
+	{
+		tableRow.style.backgroundColor = '#dcfac9';
+	}
+	else
+	{
+		tableRow.style.backgroundColor = 'white';
+	}
+}
+
+
+//Displays the beverage with more information from the table and with different pictures
 var beer_id;
+function DoNav(beer_id_temp)
+{
+	var beer;
+	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+beer_id_temp+'"';
+	beer_id = beer_id_temp;
+	var beer_info = JSON.parse(Get(url));
+	document.getElementById("the_selected_beer").innerHTML=beer_info.payload[0].namn;
+	document.getElementById("beer_info").innerHTML=beer_info.payload[0].namn + "-- " + beer_info.payload[0].namn2+"--"+ beer_info.payload[0].leverantor+ " -- Type:  "+ beer_info.payload[0].varugrupp ;
+
+
+	var beverage;
+	beverage = beer_info.payload[0].varugrupp;
+
+	if(beverage.toLowerCase().match("öl") && parseInt(beer_id)<170000){
+		beer='bottle.jpg';
+	}
+	else if(beverage.toLowerCase().match("öl")&& parseInt(beer_id)>170000){
+		beer='beer_glass.jpg';
+	}
+	else if(beverage.toLowerCase().match("vin")){
+		beer='wine.jpg';
+	}
+	else beer='cider.jpg';
+
+	document.getElementById("selected_beverage").innerHTML= '<img src='+beer+' width="185" height="272" alt="beer" />';
+}
+
+
+// displays the choosen beer with more information
 function changeFunc(beer_id_temp){
 	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+beer_id_temp+'"';
 	beer_id = beer_id_temp;
 	var beer_info = JSON.parse(Get(url));
 	document.getElementById("the_selected_beer").innerHTML=beer_info.payload[0].namn;
 	document.getElementById("beer_info").innerHTML=beer_info.payload[0].namn + "-- " + beer_info.payload[0].namn2+"--"+ beer_info.payload[0].leverantor;
+	var beverage;
+	beverage = beer_info.payload[0].varugrupp;
+
+	if(beverage.toLowerCase().match("öl") && parseInt(beer_id)<170000){
+		beer='bottle.jpg';
+	}
+	else if(beverage.toLowerCase().match("öl")&& parseInt(beer_id)>170000){
+		beer='beer_glass.jpg';
+	}
+	else if(beverage.toLowerCase().match("vin")){
+		beer='wine.jpg';
+	}
+	else beer='cider.jpg';
+
+	document.getElementById("selected_beverage").innerHTML= '<img src='+beer+' width="185" height="272" alt="beer" />';
 }
 
 //Search for beer

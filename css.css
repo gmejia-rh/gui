@@ -128,3 +128,26 @@ submit{
 beerbuttons{
 
 }
+
+/*CSS for the table*/
+table tbody, table thead
+{
+	display: block;
+
+
+}
+table tbody
+{
+	overflow: auto;
+	height: 250px;
+
+}
+th, td{
+	width:200px;
+	text-align: left;
+}
+
+th{
+	background-color: aliceblue;
+}
+
