@@ -44,8 +44,33 @@ function loginusr() {
 
 	}
 }
+ 
+ // --------------------------------------------------------------------------------------------------------LOOK HERE FOR WHAT's NEEDED TO MAKE UNDO/REDO WORK------------------------------
+//when a beer is added to cart this need to be updated
+var latest_beer = "";
+var undone_beer = "";
+function undo(){
+	if (latest_beer != ""){
+	//remove function needed for a specific beer from the cart
+		//remove(latest_beer);
+		undone_beer = latest_beer;
+		latest_beer = "";
+		
+	}
+	alert("Undone");
+}
+function redo(){
+	if (undone_beer != ""){
+	//the same function that adds beer to the tab. 
+		beer_id = undone_beer;
+		//addbeertotab();
+		latest_beer = undone_beer;
+		undone_beer = "";
+	}
+	alert("redone");
+}
 
-
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//Alerts for credit and cash payment
 	function paycash(){
 		alert("Cash register opened");
