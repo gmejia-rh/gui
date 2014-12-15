@@ -228,7 +228,7 @@ function if_beer_or_wine(beer_id_temp){
 function beer_table(){
 
 	var array = beer_list();
-	alert();
+	//alert();
 	array.sort();
 	var outPut='<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
