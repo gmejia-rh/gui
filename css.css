@@ -96,7 +96,42 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* this changes the background
 	background-color: #6F7D94;
 	color: #FFF;
 }
+/****************************************************
+ * 	Beerbutton
+ *****************************************************/
+.Beerbutton{
+	position:relative;
+	width:100px;
+	height:100px;
+	color:#FFF;
+	display:inline-block;
+	text-decoration:none;
+	margin:0 auto;
+	border-radius:5px;
+	border:solid 1px #D94E3B;
+	background:#1E90FF;
+	text-align:center;
 
+	font-weight: bold;
+	display: inline-flex;
+	align-items: center; /* cross axis */
+	justify-content: center; /* main axis */
+	line-height: 1; /* reset */
+
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+
+	-webkit-box-shadow: 0px 9px 0px #84261a;
+	-moz-box-shadow: 0px 9px 0px #84261a;
+	box-shadow: 0px 9px 0px #84261a;
+}
+.Beerbutton:active{
+	-webkit-box-shadow: 0px 2px 0px #84261a;
+	-moz-box-shadow: 0px 2px 0px #84261a;
+	box-shadow: 0px 2px 0px #84261a;
+	position:relative;
+	top:7px;
 /* ~~ The footer ~~ */
 .footer {
 	padding: 10px 0;
@@ -128,26 +163,3 @@ submit{
 beerbuttons{
 
 }
-
-/*CSS for the table*/
-table tbody, table thead
-{
-	display: block;
-
-
-}
-table tbody
-{
-	overflow: auto;
-	height: 250px;
-
-}
-th, td{
-	width:200px;
-	text-align: left;
-}
-
-th{
-	background-color: aliceblue;
-}
-
