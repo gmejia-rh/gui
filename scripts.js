@@ -98,6 +98,8 @@ function loginusr() {
 		//alert(""+usr);
 		document.getElementById("header").innerHTML = ("Logged in as: " + usr);
 		//beer_table();
+		beer_stocklist();
+		beer_toplist();
 		//document.getElementById("paycredit").style.display = '';
 		var creditslist = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username="+usr+"&password="+usr+"&action=iou_get"));
 //alert ("creditslist<"+creditslist.payload[0].assets+">");
@@ -162,7 +164,9 @@ function if_beer_or_wine(beer_id_temp){
 }
 //Creates a table with the all the beers
 function beer_table(){
+
 	var array = beer_list();
+	alert();
 	array.sort();
 	var outPut='<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
@@ -190,7 +194,8 @@ function beer_table(){
 function wine_table(){
 	var array = beer_list();
 	array.sort();
-	var outPut='<table border="thick"><thead><tr><th>Wine</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	var outPut='<table border="thi' +
+		'ck"><thead><tr><th>Wine</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])==false) {
 
@@ -249,8 +254,110 @@ function ChangeColor(tableRow, highLight){
 		tableRow.style.backgroundColor = 'white';
 	}
 }
+//list for statistics
+function beer_stocklist(){
+	spinner_start();
+	alert('spinner only works if this alert is used...');
+	var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+	var i;
+	var main_array= [];
+	var array = [];
 
 
+	for(i=0; i<data_beer.payload.length; i++) {
+		if (data_beer.payload[i].namn != "") {
+			array[array.length] = data_beer.payload[i].namn;
+			array[array.length] = data_beer.payload[i].namn2;
+			array[array.length] = data_beer.payload[i].count;
+			array[array.length] = data_beer.payload[i].beer_id;
+
+			main_array[main_array.length] = array;
+
+			array = [];
+
+		}
+	}
+	//beer_box(main_array)
+	return main_array;
+
+}
+//Creates a table for the statistics
+function beer_stocktable(){
+	var array = beer_stocklist();
+	array.sort();
+	var outPut='<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Remaining</th><th>ID</th></tr></thead><tbody>';
+	for(i=0; i<array.length; i++){
+		if(parseInt(array[i][2])>5) {
+
+
+			outPut += '<tr  draggable="true"; onmouseover="ChangeColor(this, true);"onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			//output += '<option value='+ array[i][3]+'>';
+			for (k = 0; k < array[i].length - 1; k++) {
+				outPut += '<td>' + array[i][k] + '</td>';
+
+			}
+
+			outPut += '</tr>';
+		}
+	}
+	spinner.stop();
+	//alert("listan" + output)
+	outPut += '</tbody></table>';
+	document.getElementById("stockTable").innerHTML = outPut;
+	document.getElementById("selected_beverage").innerHTML= '<img src="bottle.jpg" width="185" height="272" alt="beer" />';
+
+}
+//toplist for most sold beers
+function beer_toplist(){
+	spinner_start();
+	alert('spinner only works if this alert is used...');
+	var data_beer = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=inventory_get"));
+	var i;
+	var main_array= [];
+	var array = [];
+
+
+	for(i=0; i<data_beer.payload.length; i++) {
+		if (data_beer.payload[i].namn != "") {
+			array[array.length] = data_beer.payload[i].namn;
+			array[array.length] = data_beer.payload[i].namn2;
+			array[array.length] = data_beer.payload[i].count;
+			array[array.length] = data_beer.payload[i].beer_id;
+
+			main_array[main_array.length] = array;
+
+			array = [];
+
+		}
+	}
+	//beer_box(main_array)
+	return main_array;
+
+//Creates a table for the toplist
+function beer_toptable() {
+	var array = beer_toplist();
+	array.sort();
+	var outPut = '<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	for (i = 0; i < array.length; i++) {
+		if (parseInt(array[i][2]) < 5) {
+
+
+			outPut += '<tr  draggable="true"; onmouseover="ChangeColor(this, true);"onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			//output += '<option value='+ array[i][3]+'>';
+			for (k = 0; k < array[i].length - 1; k++) {
+				outPut += '<td>' + array[i][k] + '</td>';
+
+			}
+
+			outPut += '</tr>';
+		}
+	}
+	spinner.stop();
+	//alert("listan" + output)
+	outPut += '</tbody></table>';
+	document.getElementById("topTable").innerHTML = outPut;
+	document.getElementById("selected_beverage").innerHTML = '<img src="bottle.jpg" width="185" height="272" alt="beer" />';
+}
 //Displays the beverage with more information from the table and with different pictures
 var beer_id;
 function DoNav(beer_id_temp)
