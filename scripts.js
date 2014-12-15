@@ -90,6 +90,63 @@ function loginusr() {
 		window.open("Bartender.html" , "_self");
 	}
 
+	function beerbuttons(button_nr){
+	//alert("hej21 "+button_nr);
+	var test = "ja";
+	
+		if (button_nr == 1){
+			var button_value = document.getElementById("button1").value;
+			
+			//alert("hej " + button_value);
+			if (button_value == "Lager"){
+			document.getElementById("button1").value = "Heiniken Exp";
+			document.getElementById("button2").value = "Carlsberg Exp";
+			document.getElementById("button3").value = "Duvel";
+			document.getElementById("button4").value = "Kung";
+			document.getElementById("button5").value = "Samuel Adams";
+			document.getElementById("button6").value = "Slottskällan";
+			document.getElementById("button7").value = "Leffe";
+			document.getElementById("button8").value = "BACK";
+			}
+			if (button_value == "Heiniken Exp"){
+				alert("Heiniken Exp is added to the order");
+				restore_buttons();
+			}
+		}
+		if (button_nr == 2){
+			var button_value = document.getElementById("button2").value;
+			
+			//alert("hej " + button_value);
+			if (button_value == "IPA"){
+			document.getElementById("button1").value = "Heiniken IPA";
+			document.getElementById("button2").value = "Carlsberg IPA";
+			document.getElementById("button3").value = "IPA nr4";
+			document.getElementById("button4").value = "Kung IPA";
+			document.getElementById("button5").value = "Samuel Adams";
+			document.getElementById("button6").value = "Slottskäll. IPA";
+			document.getElementById("button7").value = "Guinness IPA";
+			document.getElementById("button8").value = "BACK";
+			}
+		}
+		if(button_nr == 8){
+			var button_value = document.getElementById("button8").value;
+			
+			//alert("hej " + button_value);
+			if (button_value == "BACK"){
+			 restore_buttons();
+			}
+		}
+	}
+	function restore_buttons(){
+		document.getElementById("button1").value = "Lager";
+			document.getElementById("button2").value = "IPA";
+			document.getElementById("button3").value = "Ale";
+			document.getElementById("button4").value = "Stout";
+			document.getElementById("button5").value = "Week's Beer";
+			document.getElementById("button6").value = "Heiniken";
+			document.getElementById("button7").value = "Carlsberg";
+			document.getElementById("button8").value = "Tap Beer";
+	}
 //ONLOAD FOR STATISTICS
 function onLoad(){
 
