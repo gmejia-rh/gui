@@ -125,12 +125,12 @@ function beer_list(){
 	var main_array= [];
 	var array = [];
 
-
-	for(i=0; i<data_beer.payload.length; i++) {
+//data_beer.payload.length
+	for(i=0; i<30; i++) {
 		if (data_beer.payload[i].namn != "") {
 			array[array.length] = data_beer.payload[i].namn;
 			array[array.length] = data_beer.payload[i].namn2;
-			array[array.length] = data_beer.payload[i].pub_price + " sek";
+			array[array.length] = data_beer.payload[i].pub_price;
 			array[array.length] = data_beer.payload[i].beer_id;
 
 			main_array[main_array.length] = array;
@@ -169,7 +169,7 @@ function beer_table(){
 		if(if_beer_or_wine(array[i][3])==true) {
 
 
-			outPut += '<tr  draggable="true"; onmouseover="ChangeColor(this, true);"onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			outPut += '<tr  draggable="true"; onmouseover="ChangeColor(this, true);"onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3]+','+ array[i][2] + ');">';
 			//output += '<option value='+ array[i][3]+'>';
 			for (k = 0; k < array[i].length - 1; k++) {
 				outPut += '<td>' + array[i][k] + '</td>';
@@ -194,7 +194,7 @@ function wine_table(){
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])==false) {
 
-			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] +','+ array[i][2] + ');">';
 			//output += '<option value='+ array[i][3]+'>';
 			for (k = 0; k < array[i].length - 1; k++) {
 				outPut += '<td>' + array[i][k] + '</td>';
@@ -220,7 +220,7 @@ function other_table(){
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])=="cider") {
 
-			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] + ');">';
+			outPut += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + array[i][3] +','+ array[i][2] + ');">';
 			//output += '<option value='+ array[i][3]+'>';
 			for (k = 0; k < array[i].length - 1; k++) {
 				outPut += '<td>' + array[i][k] + '</td>';
@@ -253,11 +253,13 @@ function ChangeColor(tableRow, highLight){
 
 //Displays the beverage with more information from the table and with different pictures
 var beer_id;
-function DoNav(beer_id_temp)
+var price;
+function DoNav(beer_id_temp, price_temp)
 {
 	var beer;
 	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+beer_id_temp+'"';
 	beer_id = beer_id_temp;
+	price = price_temp;
 	var beer_info = JSON.parse(Get(url));
 	document.getElementById("the_selected_beer").innerHTML=beer_info.payload[0].namn;
 	document.getElementById("beer_info").innerHTML=beer_info.payload[0].namn + "-- " + beer_info.payload[0].namn2+"--"+ beer_info.payload[0].leverantor+ " -- Type:  "+ beer_info.payload[0].varugrupp ;
@@ -282,9 +284,13 @@ function DoNav(beer_id_temp)
 
 
 // displays the choosen beer with more information
-function changeFunc(beer_id_temp){
-	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+beer_id_temp+'"';
-	beer_id = beer_id_temp;
+function changeFunc(list){
+	var array = list;
+	alert(array.length);
+	alert(array[0]);
+	var url='http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="'+array[0]+'"';
+	beer_id = array[0];
+	price=array[1];
 	var beer_info = JSON.parse(Get(url));
 	document.getElementById("the_selected_beer").innerHTML=beer_info.payload[0].namn;
 	document.getElementById("beer_info").innerHTML=beer_info.payload[0].namn + "-- " + beer_info.payload[0].namn2+"--"+ beer_info.payload[0].leverantor;
@@ -321,7 +327,7 @@ function search_beer(){
 	}
 
 	for(i=0; i<list.length; i++){
-		result += '<option value='+ list[i][3]+'>';
+		result += '<option value='+ [list[i][3],list[i][2]]+'>';
 		for(k=0; k<list[i].length-1; k++){
 			result += " " + list[i][k];
 
@@ -333,6 +339,7 @@ function search_beer(){
 	document.getElementById("search_result").innerHTML = result;
 
 	list=[];
+	spinner.stop();
 
 }
 
@@ -341,10 +348,10 @@ function search_beer(){
 /////////////////////////////////////////////////////
 // This function should create the Tab for a costumer
 var ListTab=[];
-var cost = [];
+var cost;
 function createTab(){
 	//ListTab[ListTab.length] = [];
-	cost[cost.length] = 0;
+	cost = 0;
 }
 // Add a beer to the tab
 function addBeerTab(){
@@ -355,12 +362,13 @@ function addBeerTab(){
 	var beer_info = JSON.parse(Get(url));
 	var array = [];
 	array[0] = beer_info.payload[0].namn;
-	array[1] = beer_info.payload[0].pub_price;
+	array[1] = price;
 
-	ListTab[id][length-1]=array;
+	ListTab[id]=array;
 
-	//updateCost();
-	array = []
+	updateCost();
+	tab_box();
+	array = [];
 }
 function removeBeer(cmd_id){
 	ListTab.remove(cmd_id);
@@ -368,10 +376,12 @@ function removeBeer(cmd_id){
 }
 function updateCost(){
 	var sum = 0;
-	for(ii=0;ii<listTab.length-1;ii++){
-		sum += listTab[ii][1];
+	for(ii=0;ii<ListTab.length;ii++){
+		sum += parseInt(ListTab[ii][1]);
+		alert(ListTab[ii][1]);
 	}
 	cost = sum;
+	alert(cost);
 };
 //Creates a listbox with all the beers in the tab.
 function tab_box(){
