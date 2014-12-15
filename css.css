@@ -131,7 +131,7 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* this changes the background
 	-moz-box-shadow: 0px 2px 0px #84261a;
 	box-shadow: 0px 2px 0px #84261a;
 	position:relative;
-	top:7px;
+	top:7px;}
 /* ~~ The footer ~~ */
 .footer {
 	padding: 10px 0;
@@ -160,6 +160,26 @@ submit{
 	font-size:36px;	
 
 }
-beerbuttons{
 
+
+/*CSS for the table*/
+table tbody, table thead
+{
+	display: block;
+
+
+}
+table tbody
+{
+	overflow: auto;
+	height: 250px;
+
+}
+th, td{
+	width:200px;
+	text-align: left;
+}
+
+th{
+	background-color: aliceblue;
 }
