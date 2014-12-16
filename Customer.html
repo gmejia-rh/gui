@@ -46,13 +46,24 @@
 
     <h1 id="bebidas">Beverages</h1>
 	<p class="wine_button"> 
-      <input  class="Beerbutton2" name="commit" value="Beer" onclick="beer_table()"></input>
+      <input  class="Beerbutton2" name="commit" value="Beer" onclick="beer_table();" ></input>
     <input  class="Beerbutton2"  name="commit" value="Wine" onclick="wine_table()"></input>
     <input class="Beerbutton2"  name="commit" value="Cider" onclick="other_table()"></p>
     <p id="elegirBebida">Please choose a Beverage: </p>
 
 
+
     <div id="beerTable"></div>
+
+    <p>
+      <label>Search
+        <input type="text" name="Search" id="Search" value="" />
+      </label>
+    </p>
+    <p class="submit"><input type="submit" name="commit" value="Search" onclick="search_beer()">
+    </p>
+
+    </br>
     <div id='foo'></div>
   </br>
 
@@ -62,16 +73,9 @@
 	<p>
 	<input class="Beerbutton2"  name="commit" value="Undo" onclick="undo()">
 	<input class="Beerbutton2"  name="commit" value="Redo" onclick="redo()"></p>
-    <p>
-      <label>Search
-        <input type="text" name="Search" id="Search" value="" />
-      </label>
-    </p>
-    <p class="submit"><input type="submit" name="commit" value="Search" onclick="search_beer()">
-    </p>
-    </br>
 
-    <div id = "search_result"></div>
+
+
   <!-- end .content --></div>
   <div class="footer">
     <p>Copyright The Beer Pub Group 1 GUI</p>

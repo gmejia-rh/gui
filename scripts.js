@@ -186,7 +186,7 @@ function onLoad(){
 		//alert(""+usr);
 		document.getElementById("header").innerHTML = ("Logged in as: " + usr);
 		//beer_table();
-
+		tab_box();
 		//document.getElementById("paycredit").style.display = '';
 		var creditslist = JSON.parse(Get("http://pub.jamaica-inn.net/fpdb/api.php?username="+usr+"&password="+usr+"&action=iou_get"));
 //alert ("creditslist<"+creditslist.payload[0].assets+">");
@@ -251,7 +251,6 @@ function if_beer_or_wine(beer_id_temp){
 }
 //Creates a table with the all the beers
 function beer_table(){
-
 	var array = beer_list();
 	//alert();
 	array.sort();
@@ -422,7 +421,7 @@ function beer_toplist() {
 	return main_array;
 }
 //Creates a table for the toplist
-	function beer_toptable() {
+function beer_toptable() {
 		alert("");
 		var array = beer_toplist();
 		array.sort();
@@ -511,10 +510,10 @@ function beer_toplist() {
 		var array = beer_list();
 		var search_name = document.getElementById("Search").value;
 		var list = [];
-		var result = '<select size="5" name="decision2" style="width: 400px;" onchange="changeFunc(value);">';
+		var result = '<table border="thick"><thead><tr><th>Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 
 		for (i = 0; i < array.length; i++) {
-			for (k = 0; k < array[i].length - 1; k++) {
+			for (k = 0; k < array[i].length -1; k++) {
 				if (array[i][k].toLowerCase().match(search_name.toLowerCase())) {
 					list[list.length] = array[i];
 				}
@@ -522,16 +521,17 @@ function beer_toplist() {
 		}
 
 		for (i = 0; i < list.length; i++) {
-			result += '<option value=' + [list[i][3], list[i][2]] + '>';
+			result += '<tr onmouseover="ChangeColor(this, true); "onmouseout="ChangeColor(this, false);"onclick="DoNav(' + list[i][3] +','+ list[i][2] + ');">';
 			for (k = 0; k < list[i].length - 1; k++) {
-				result += " " + list[i][k];
+
+				result += '<td>' + list[i][k] + '</td>';
 
 			}
-			result += '</option>' + '</br>';
+			result += '</tr>';
 		}
 		//alert("listan" + output)
-		result += '</select>'
-		document.getElementById("search_result").innerHTML = result;
+		result += '</tbody></table>';
+		document.getElementById("beerTable").innerHTML = result;
 
 		list = [];
 		spinner.stop();
