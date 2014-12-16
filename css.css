@@ -162,4 +162,32 @@ submit{
 }
 beerbuttons{
 
+<<<<<<< Updated upstream
+=======
+
+/*CSS for the table*/
+table tbody, table thead
+{
+	display: block;
+	background-color: white;
+
+
+}
+table tbody
+{
+	overflow: auto;
+	height: 250px;
+
+}
+tr:hover{
+	background-color: azure;
+}
+th, td{
+	width:200px;
+	text-align: left;
+}
+
+th{
+	background-color: aliceblue;
+>>>>>>> Stashed changes
 }
