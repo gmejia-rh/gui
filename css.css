@@ -1,10 +1,11 @@
 @charset "utf-8";
 body {
 	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background-color: #4E5869;
+	background-image:url(woodTest.jpg);
+	background-repeat: repeat;
+	color: #000000;
 	margin: 0;
 	padding: 0;
-	color: #000;
 }
 
 /* ~~ Element/tag selectors ~~ */
@@ -37,6 +38,7 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 /* ~~ this container surrounds all other divs giving them their percentage-based width ~~ */
 .container {
 	width: 80%;
+	z-index : 2;
 	max-width: 1260px;/* a max-width may be desirable to keep this layout from getting too wide on a large monitor. This keeps line length more readable. IE6 does not respect this declaration. */
 	min-width: 780px;/* a min-width may be desirable to keep this layout from getting too narrow. This keeps line length more readable in the side columns. IE6 does not respect this declaration. */
 	background-color: #FFF;
@@ -46,6 +48,16 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 /* ~~ the header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo ~~ */
 .header {
 	background-color: #6F7D94;
+}
+
+.logo {
+	position : absolute;
+	z-index : 0;
+	width : auto;
+	height : auto;
+	top : 0px;
+	right : -45px;
+	margin : auto;
 }
 
 /* ~~ These are the columns for the layout. ~~ 

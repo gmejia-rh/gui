@@ -13,7 +13,13 @@
  <figure>
   <img src="flag-spain.jpg" alt="spanish flag" width="30" height="22" onclick='changeToSpanish()'>
    <img src="en-flag.png" alt="english flag" width="30" height="22" onclick='changeToEnglish()'>
-</figure> 
+
+</figure>
+ <div class="logo">
+   <figure>
+     <img src="testLogo.gif" alt="spanish flag">
+   </figure>
+ </div>
 <div class="container">
   <div class="header" id="header">Customer </div>
   <div class="sidebar1">
@@ -35,6 +41,7 @@
         <button type="button" onClick="onClick()">Click to add credits</button>
         <p>Credits: <a id="credits">0</a></p></li>
       <li><a href="#" onclick="addBeerTab()" >Add Beer to tab</a></li>
+      <li><a href="#" onclick="removeBeer()" >Remove from tab</a></li>
      <!-- <li><a href="#"  onclick= "window.open('TabPopUp.html', 'pop', 'height=x, width=y, top=z, left=t, resible=no');">See Tab</a></li>-->
       <li><a href="#" onclick="tab_table()" >See Tab</a></li>
       <li><a href="#">Check out</a></li>
@@ -51,8 +58,10 @@
       <input class="Beerbutton2"  name="commit" value="Cider" onclick="other_table()"></p>
     <p id="elegirBebida">Please choose a Beverage: </p>
 
-
-    <div id="beerTable"></div>
+    <div>
+      <div id="beerTable" position="absolute" left="0px" top="0px" ></div>
+      <div id="tab" position="absolute" right="0px" top="0px"  ></div>
+    </div>
 
     <p>
       <label>Search
@@ -65,7 +74,6 @@
     <div id='foo'></div>
   </br>
 
-    <div id="tab"></div>
     </br>
     <p>
       <input class="Beerbutton2"  name="commit" value="Undo" onclick="undo()">

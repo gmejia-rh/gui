@@ -221,7 +221,6 @@ function beer_list(){
 			array[array.length] = data_beer.payload[i].namn2;
 			array[array.length] = data_beer.payload[i].pub_price;
 			array[array.length] = data_beer.payload[i].beer_id;
-
 			main_array[main_array.length] = array;
 
 			array = [];
@@ -254,7 +253,7 @@ function beer_table(){
 	var array = beer_list();
 	//alert();
 	array.sort();
-	var outPut='<table border="thick"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	var outPut='<table border="thick" width="50%"><thead><tr><th>Beer</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])==true) {
 			var id= parseInt(array[i][3]);
@@ -281,8 +280,7 @@ function beer_table(){
 function wine_table(){
 	var array = beer_list();
 	array.sort();
-	var outPut='<table border="thi' +
-		'ck"><thead><tr><th>Wine</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	var outPut='<table border="thick" width ="50%"><thead><tr><th>Wine</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])==false) {
 			var id= parseInt(array[i][3]);
@@ -309,7 +307,7 @@ function wine_table(){
 function other_table(){
 	var array = beer_list();
 	array.sort();
-	var outPut='<table border="thick"><thead><tr><th>Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+	var outPut='<table border="thick" width="50%"><thead><tr><th>Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 	for(i=0; i<array.length; i++){
 		if(if_beer_or_wine(array[i][3])=="cider") {
 			var id= parseInt(array[i][3]);
@@ -534,7 +532,7 @@ function beer_toptable() {
 		var array = beer_list();
 		var search_name = document.getElementById("Search").value;
 		var list = [];
-		var result = '<table border="thick"><thead><tr><th>Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
+		var result = '<table border="thick" width="50%"><thead><tr><th table-layout="auto">Beverage</th><th>Name</th><th>Price</th></tr></thead><tbody>';
 
 		for (i = 0; i < array.length; i++) {
 			for (k = 0; k < array[i].length -1; k++) {
@@ -577,16 +575,32 @@ function beer_toptable() {
 
 // Add a beer to the tab
 	function addBeerTab() {
+		// Check if the beer is already in the tab
 		var id = ListTab.length;
-		//var length=ListTab[id].length;
-		var url = 'http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="' + beer_id + '"';
-		var beer_info = JSON.parse(Get(url));
-		var array = [];
-		array[0] = beer_info.payload[0].namn;
-		array[1] = price;
-		array[2]=beer_id;
+		var idInTab = -1;
 
-		ListTab[id] = array;
+		for(ii = 0; ii<id; ii++){
+			if (ListTab[ii][3] == beer_id){
+				idInTab = ii;
+				break;
+			}
+		}
+
+		if(idInTab == -1) {
+			//var length=ListTab[id].length;
+			var url = 'http://pub.jamaica-inn.net/fpdb/api.php?username=ervtod&password=ervtod&action=beer_data_get&beer_id="' + beer_id + '"';
+			var beer_info = JSON.parse(Get(url));
+			var array = [];
+			array[0] = beer_info.payload[0].namn;
+			array[1] = price;
+			array[2] = 1;
+			array[3] = beer_id;
+
+			ListTab[id] = array;
+		}
+		else{
+			ListTab[ii][2]++;
+		}
 
 		updateCost();
 		//tab_box();
@@ -594,38 +608,49 @@ function beer_toptable() {
 		array = [];
 	}
 
-	function removeBeer(cmd_id) {
-		ListTab.remove(cmd_id);
-		updateCost();
+	function removeBeer() {
+		// Check if the beer is already in the tab
+		var id = ListTab.length;
+		var idInTab = -1;
+
+		for(ii = 0; ii<id; ii++){
+			if (ListTab[ii][3] == beer_id){
+				idInTab = ii;
+				break;
+			}
+		}
+
+		if (idInTab != -1) {
+			ListTab.splice(idInTab,1);
+			updateCost();
+			tab_table();
+		}
 	}
 
 	function updateCost() {
 		var sum = 0;
 		for (ii = 0; ii < ListTab.length; ii++) {
-			sum += parseInt(ListTab[ii][1]);
+			sum += parseInt(ListTab[ii][1])*ListTab[ii][2];
 		}
 		cost = sum;
 	}
 //Creates a tabel with the beers in the tab and the total cost
 function tab_table(){
 	ListTab.sort();
-	var outPut='<table border="thick"><thead><tr><th>Name</th><th>Price</th><th>Total</th></tr></thead><tbody ondrop="drop(event)" ondragover="allowDrop(event)"  ondragstart="drag(event)">';
+	var outPut='<table border="thick" table-layout="fixed" width="30%"><thead><tr><th table-layout="auto">Name</th><th>Price</th><th>Amount</th><th>Total</th></tr></thead><tbody ondrop="drop(event)" ondragover="allowDrop(event)"  ondragstart="drag(event)">';
 	for(i=0; i<ListTab.length; i++){
+		outPut += '<tr onmouseover="DoNav(' + ListTab[i][3]+','+ ListTab[i][2] + ');" onclick="DoNav(' + ListTab[i][2]+','+ ListTab[i][1] + ');">';
+		//output += '<option value='+ array[i][3]+'>';
+		outPut += '<td>' + ListTab[i][0] + '</td>';
+		outPut += '<td>' + ListTab[i][1] + '</td>';
+		outPut += '<td>' + ListTab[i][2] + '</td>';
+		outPut += '<td>' + parseInt(ListTab[i][1])*ListTab[i][2] + '</td>';
 
-
-			outPut += '<tr onmouseover="DoNav(' + ListTab[i][3]+','+ ListTab[i][2] + ');" onclick="DoNav(' + ListTab[i][2]+','+ ListTab[i][1] + ');">';
-			//output += '<option value='+ array[i][3]+'>';
-			for (k = 0; k < ListTab[i].length-1; k++) {
-				outPut += '<td>' + ListTab[i][k] + '</td>';
-
-			}
-
-
-			outPut += '</tr>';
+		outPut += '</tr>';
 
 	}
 	if(ListTab.length>0){
-	outPut+= '<tr><td></td><td></td><td>' + cost + '</td></tr>';}
+	outPut+= '<tr><td>TOTAL</td><td></td><td></td><td>' + cost + '</td></tr>';}
 
 	//alert("listan" + output)
 	outPut += '</tbody></table>';
