@@ -50,24 +50,28 @@ function loginusr() {
 var latest_beer = "";
 var undone_beer = "";
 function undo(){
+	removeBeer();
 	if (latest_beer != ""){
 	//remove function needed for a specific beer from the cart
 		//remove(latest_beer);
-		undone_beer = latest_beer;
-		latest_beer = "";
+		
+		//undone_beer = latest_beer;
+		//latest_beer = "";
 
 	}
-	alert("Undone");
+	//alert("Undone");
 }
 function redo(){
+addBeerTab();
 	if (undone_beer != ""){
 	//the same function that adds beer to the tab.
-		beer_id = undone_beer;
+		//beer_id = undone_beer;
 		//addbeertotab();
-		latest_beer = undone_beer;
-		undone_beer = "";
+		
+		//latest_beer = undone_beer;
+		//undone_beer = "";
 	}
-	alert("redone");
+	//alert("redone");
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
